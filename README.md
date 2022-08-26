@@ -1,10 +1,11 @@
-# LNURLAuth Low Entropy
-LNURLAuth Low Entropy
-Low entropy version of LNURLAuth
+# LNURLAuth ECDH
+LNURLAuth ECDH
+ECDH version of LNURLAuth
 
 This is in support of a proposed enhancement to [LUD-04: auth base spec](https://github.com/fiatjaf/lnurl-rfc/blob/luds/04.md)
 #Rationale
-The general idea is to support a secure authentication where k1 < LOW_ENTROPY_VALUE or k1 is a static value (read from a printed QR Code)
+
+The general idea is to support a secure authentication where k1 is not provably randrom or k1 is a static value (read from a printed QR Code)
 
 ```
 this is the code block
