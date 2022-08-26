@@ -1,15 +1,5 @@
-# LNURLAuth ECDH
-LNURLAuth ECDH
-ECDH version of LNURLAuth
+import secp256k1
 
-This is in support of a proposed enhancement to [LUD-04: auth base spec](https://github.com/fiatjaf/lnurl-rfc/blob/luds/04.md)
-#Rationale
-
-The general idea is to support a secure authentication where k1 is not provably randrom or k1 is a static value (read from a printed QR Code)
-
-```
-this is the code block
-```Python
 from binascii import unhexlify
 from secp256k1 import PublicKey
 
@@ -23,7 +13,3 @@ sig_raw = pubkey.ecdsa_deserialize(sig)
 r = pubkey.ecdsa_verify(k1, sig_raw, raw=True)
 
 assert r == True
-```
-```
-python -m secp256k1 privkey -p
-```
