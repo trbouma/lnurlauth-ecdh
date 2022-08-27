@@ -4,6 +4,8 @@ from binascii import unhexlify
 import binascii,os
 import secp256k1
 
+from simpleECDH import make_shared_secret
+
 '''
 Generate the private key from a new instance. The public key is an attribute of the new instance
 Serialize into hex string variables. 
@@ -13,13 +15,14 @@ The hardest part is keeping straight the various instantiations, formats and enc
 '''
 
 privkey_wallet = PrivateKey()
+
 privkey_str_wallet = privkey_wallet.serialize()
 pubkey_str_wallet = privkey_wallet.pubkey.serialize().hex()
 
 print("="*80)
 # Display the serializations of the wallet keys
 # print("Wallet:",privkey_str_wallet, pubkey_str_wallet)
-print(f"Wallet Private Key: {privkey_str_wallet} \nWallet Public Key: {pubkey_str_wallet}")
+print(f"Wallet Private Key: \t{privkey_str_wallet} \nWallet Public Key: \t{pubkey_str_wallet}")
 
 
 privkey_verifier = PrivateKey()
@@ -27,22 +30,24 @@ privkey_str_verifier = privkey_verifier.serialize()
 pubkey_str_verifier = privkey_verifier.pubkey.serialize().hex()
 
 # print("Verifier:",privkey_str_wallet, pubkey_str_wallet)
-print(f"Verifier Private Key: {privkey_str_verifier} \nVerifier Public Key: {pubkey_str_verifier}")
+print(f"Verifier Private Key: \t{privkey_str_verifier} \nVerifier Public Key: \t{pubkey_str_verifier}")
 
 # This is to confirm that the keys can be reconstructed from the hex strings
 print("="*80)
 privkey_wallet2 = PrivateKey(bytes(bytearray.fromhex(privkey_str_wallet)), raw=True)
+
 privkey_str_wallet2 = privkey_wallet2.serialize()
 pubkey_str_wallet2 = privkey_wallet2.pubkey.serialize().hex()
 
 privkey_verifier2 = PrivateKey(bytes(bytearray.fromhex(privkey_str_verifier)), raw=True)
+
 privkey_str_verifier2 = privkey_verifier2.serialize()
 pubkey_str_verifier2 = privkey_verifier2.pubkey.serialize().hex()
 
 
 
-print(f"Wallet Private Key2: {privkey_str_wallet2} \nWallet Public Key2: {pubkey_str_wallet2}")
-print(f"Verifier Private Key2: {privkey_str_wallet2} \nVerifier Public Key2: {pubkey_str_wallet2}")
+print(f"Wallet Private Key2: \t{privkey_str_wallet2} \nWallet Public Key2: \t{pubkey_str_wallet2}")
+print(f"Verifier Private Key2: \t{privkey_str_verifier2} \nVerifier Public Key2: \t{pubkey_str_verifier2}")
 print("="*80)
 # Generate a k1
 k1: str = binascii.hexlify(os.urandom(32)).decode()
@@ -122,12 +127,19 @@ ecdh_1_wallet = pubkey_obj_verifier.ecdh(unhexlify(privkey_wallet.serialize())).
 # create public key instance of wallet and use ecdh method
 ecdh_1_verifier = pubkey_obj_wallet.ecdh(unhexlify(privkey_verifier.serialize())).hex()
 
-print(f"ecdh_wallet: {ecdh_1_wallet} \necdh_verifier: {ecdh_1_verifier}")
+print(f"ecdh_wallet: \t{ecdh_1_wallet} \necdh_verifier: \t{ecdh_1_verifier}")
 if ecdh_1_wallet == ecdh_1_verifier:
     print("I did the ecdh thing!!")
 
 '''
 Now create a simple function that takes in the strings and returns a ecdh string
+make_shared_secret(string of local private key and string of remote public key)
 
 
 '''
+
+make_secret_1 = make_shared_secret(privkey_str_wallet,pubkey_str_verifier)
+make_secret_2 = make_shared_secret(privkey_str_verifier,pubkey_str_wallet )
+
+print(f"make_secret_1: {make_secret_1} \nmake_secret_2: {make_secret_2}")
+assert make_secret_1 == make_secret_2
