@@ -43,6 +43,8 @@ First, it's unfortunate that the notation here is kind of opposite to what Wagne
 * Alice can calculate the blinded DH key as Q - rK = kY + krG - krG = kY = Z
 * Alice can take the pair (x, Z) as a coin. She gives it to a shop as spending.
 * The shop can send (x, Z) to the bank who then checks that k* (hash-to-curve(x)) == Z, and if so treats it as a valid spend of a blinded coin, adding it to the spent list.
+
+
 (as before, I agree with your idea that Alice, here should get a DLEQ proof of K/G vs Q/T to guarantee 'realness' of a coin, albeit since this scheme has to fully trust the bank wrt redemptions, it's debatable I guess?).
 
 To get the security assumptions clear, I think we should first write down the set of properties required, something like:
