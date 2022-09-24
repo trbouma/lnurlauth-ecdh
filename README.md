@@ -32,6 +32,8 @@ python -m secp256k1 privkey -p
 
 [repo](https://gist.github.com/RubenSomsen/be7a4760dd4596d06963d67baf140406)
 
+[email](http://cypherpunks.venona.com/date/1996/03/msg01848.html)
+
 So, reviewing this again today after seeing @callebtc 's repo, I wanted to make some comments:
 
 First, it's unfortunate that the notation here is kind of opposite to what Wagner originally wrote. Here, Bob is the 'customer' and Alice is the bank (whereas Wagner had it the other way round, probably more intuitive :) with Bob the Bank and Alice the customer). To summarize how Wagner presented it, but with EC additive notation:
