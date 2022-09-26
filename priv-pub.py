@@ -143,3 +143,9 @@ make_secret_2 = make_shared_secret(privkey_str_verifier,pubkey_str_wallet )
 
 print(f"make_secret_1: {make_secret_1} \nmake_secret_2: {make_secret_2}")
 assert make_secret_1 == make_secret_2
+
+
+# Experiment with tweaking
+privkey_wallet.tweak_add(unhexlify(make_secret_1))
+
+privkey_wallet.pubkey.tweak_add(unhexlify(make_secret_1))
